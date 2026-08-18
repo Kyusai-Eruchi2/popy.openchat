@@ -10,8 +10,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
    const baseAnnouncement = `
       我々は！
-   ぽぴぃ がぽぴぽびぽぴっ と受験に勝って戻ってくるまで！
-   ひたすらに侍ち続ける！
+ぽぴぃ がぽぴぽびぽぴっ と受験に勝って戻ってくるまで！
+ひたすらに侍ち続ける！
 
    @ぽぴぃの後継者よしきゅー。に続け！!！
    `;

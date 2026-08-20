@@ -1,1 +1,375 @@
-ｆｆｆ
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>アナウンス照合ツール</title>
+
+    <link rel="stylesheet" href="stylesheet.css">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+JP:wght@400;500;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+<!-- =========================
+        Header
+========================== -->
+
+<header class="header">
+
+    <div class="header-text">
+
+        <h1>アナウンス照合ツール</h1>
+
+        <p>LINE OpenChat Management Tool</p>
+
+    </div>
+
+    <button id="themeToggle" class="theme-btn">
+        🌙
+    </button>
+
+</header>
+
+<!-- =========================
+        Main
+========================== -->
+
+<main class="container">
+
+    <!-- 入力欄 -->
+    <section class="input-grid">
+
+        <!-- 元文章 -->
+        <div class="card">
+
+            <div class="card-header">
+                <h2>📌 元アナウンス</h2>
+            </div>
+
+            <div id="originalText" class="announcement-view">
+                読み込み中...
+            </div>
+
+        </div>
+
+        <!-- 比較文章 -->
+
+        <div class="card">
+
+            <div class="card-header">
+
+                <h2>📋 照合するアナウンス</h2>
+
+                <div class="card-buttons">
+
+                    <button id="pasteRight">
+                        📋 貼り付け
+                    </button>
+
+                    <button id="clearRight">
+                        🗑️ クリア
+                    </button>
+
+                </div>
+
+            </div>
+
+            <textarea
+                id="compareText"
+                placeholder="照合するアナウンスを入力してください..."
+            ></textarea>
+
+            <div class="card-footer">
+
+                <span id="rightCount">
+                    0文字
+                </span>
+
+            </div>
+
+        </div>
+
+    </section>
+
+    <!-- ボタン -->
+
+    <section class="action-area">
+
+        <button id="compareBtn" class="compare-btn">
+
+            🔍 照合開始
+
+        </button>
+
+    </section>
+
+    <!-- ローディング -->
+
+    <section id="loading" class="loading hidden">
+
+        <div class="spinner"></div>
+
+        <p>照合しています...</p>
+
+    </section>
+
+    <!-- 結果 -->
+
+    <section class="result-card">
+
+        <div class="result-header">
+
+            <h2>📊 照合結果</h2>
+
+            <button id="copyResult">
+
+                📄 結果をコピー
+
+            </button>
+
+        </div>
+
+        <!-- 一致率 -->
+
+        <div class="score-area">
+
+            <h3>一致率</h3>
+
+            <span id="matchRate">
+
+                0%
+
+            </span>
+
+            <div class="progress">
+
+                <div id="progressBar"></div>
+
+            </div>
+
+        </div>
+
+        <!-- GitHub風Diff -->
+
+        <div class="diff-container">
+
+            <div class="diff-toolbar">
+
+                <span>差分</span>
+
+                <span id="diffSummary">
+                    変更はありません
+                </span>
+
+            </div>
+
+            <div id="diffView" class="diff-view">
+
+                <!-- JavaScriptがここに差分を表示 -->
+
+            </div>
+
+        </div>
+
+    </section>
+
+</main>
+
+<!-- =========================
+        Version History
+========================== -->
+
+<section class="version-card">
+
+    <div class="version-header">
+
+        <h2>📜 バージョン履歴</h2>
+
+        <span class="current-version">
+            v1.3.0
+        </span>
+
+    </div>
+
+
+    <div class="version-list">
+
+
+        <!-- v1.3.0 -->
+
+        <div class="version-item">
+
+            <div class="version-dot"></div>
+
+            <div class="version-content">
+
+                <div class="version-title">
+
+                    <h3>v1.3.0</h3>
+
+                    <span>
+                        2026/08/21
+                    </span>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        LCS方式の差分比較を導入
+                    </li>
+
+                    <li>
+                        一致率の計算方式を改善
+                    </li>
+
+                    <li>
+                        改行を含めた厳密な比較に対応
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- v1.2.0 -->
+
+        <div class="version-item">
+
+            <div class="version-dot"></div>
+
+            <div class="version-content">
+
+                <div class="version-title">
+
+                    <h3>v1.2.0</h3>
+
+                    <span>
+                        2026/08/20
+                    </span>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        元アナウンスを管理者側で設定する方式に変更
+                    </li>
+
+                    <li>
+                        ダークモードのDiff表示を改善
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- v1.1.0 -->
+
+        <div class="version-item">
+
+            <div class="version-dot"></div>
+
+            <div class="version-content">
+
+                <div class="version-title">
+
+                    <h3>v1.1.0</h3>
+
+                    <span>
+                        2026/08/19
+                    </span>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        GitHub風Diff表示を追加
+                    </li>
+
+                    <li>
+                        追加・削除・変更を色分け
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+        <!-- v1.0.0 -->
+
+        <div class="version-item">
+
+            <div class="version-dot"></div>
+
+            <div class="version-content">
+
+                <div class="version-title">
+
+                    <h3>v1.0.0</h3>
+
+                    <span>
+                        2026/08/18
+                    </span>
+
+                </div>
+
+                <ul>
+
+                    <li>
+                        アナウンス照合ツール公開
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+<!-- =========================
+        Toast
+========================== -->
+
+<div id="toast" class="toast">
+
+    コピーしました
+
+</div>
+
+<!-- =========================
+        Footer
+========================== -->
+
+<footer>
+
+    <p>
+
+        © 2026 Kyusai-Eruchi
+
+    </p>
+
+</footer>
+
+<script src="script.js"></script>
+
+</body>
+</html>
